@@ -1,5 +1,4 @@
 # API Endpoints
--
 ### [GET] Time of Sunrise
 Arguments
 
