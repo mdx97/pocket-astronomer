@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,20 @@ public class SettingsActivity extends AppCompatActivity {
         String eventName = ini.getStringExtra("eventName");
         TextView titleTV = findViewById(R.id.titleTV);
         titleTV.setText("Settings: " + eventName);
+    }
+
+    public void noticesToggle(View v){
+        Switch hourNoticeSwitch = findViewById(R.id.hourNoticeSwitch);
+        Switch dayNoticeSwitch = findViewById(R.id.dayNoticeSwitch);
+        Switch weekNoticeSwitch = findViewById(R.id.weekNoticeSwitch);
+        hourNoticeSwitch.setChecked(false);
+        dayNoticeSwitch.setChecked(false);
+        weekNoticeSwitch.setChecked(false);
+    }
+
+    public void subNoticesToggle(View v){
+        Switch notificationsSwitch = findViewById(R.id.notificationsSwitch);
+        notificationsSwitch.setChecked(false);
     }
 
     public void returnAction(View v) {
