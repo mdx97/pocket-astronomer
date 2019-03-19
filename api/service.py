@@ -1,5 +1,5 @@
 from flask import Flask, request
-from utils import get_sun_transition_time
+from api import get_sun_transition_time, get_lunar_phase, get_events
 
 app = Flask(__name__)
 
@@ -14,6 +14,14 @@ def sunrise():
 @app.route("/sunset")
 def sunset():
     return get_sun_transition_time("sunset")
+
+@app.route("/lunar_phase")
+def lunar_phase():
+    return get_lunar_phase()
+
+@app.route("/events")
+def events():
+    return get_events()
 
 if __name__ == "__main__":
     app.run()
