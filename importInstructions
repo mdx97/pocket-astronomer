@@ -1,0 +1,12 @@
+These are just my recommendations:
+
+Instructions for anyone having trouble setting up the project:
+1. Nuke any failed attempts on your local machine.
+2. Get the clone url from github.
+3. (Tested using GitBash) git clone to anywhere on your local machine.
+4. Import into Android Studio: File -> New -> Import Project
+5. The Android Studio project is inside the local clone of the github project
+
+Version Control
+1. Don't bother with Android Studio's version control
+2. Use GitBash (from inside the repo folder, not the android studio project folder) for pulls, commits, and pushes
