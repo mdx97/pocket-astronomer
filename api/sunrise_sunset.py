@@ -12,12 +12,6 @@ class SunriseSunsetTimeRequest:
         if not "lat" in self.arguments or not "lon" in self.arguments:
             return None
         return SunriseSunsetLocation(float(self.arguments["lat"]), float(self.arguments["lon"]))
-    
-    @property
-    def date(self):
-        if not "date" in self.arguments:
-            return None
-        return datetime.strptime(self.arguments["date"], "%Y-%m-%d")
 
     def get(self):
         try:
