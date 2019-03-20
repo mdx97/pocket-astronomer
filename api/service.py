@@ -1,19 +1,22 @@
 from flask import Flask, request
-from api import get_sun_transition_time, get_lunar_phase, get_events
+from utils import parse_url_arguments
+from sunrise_sunset import SunriseSunsetRequest
+from lunar_phase import get_lunar_phase
+from event import get_events
 
 app = Flask(__name__)
 
-@app.route("/")
-def index():
-    return "Hello, Flask!"
-
 @app.route("/sunrise")
 def sunrise():
-    return get_sun_transition_time("sunrise")
+    args = parse_url_arguments(request.url)
+    req = SunriseSunsetRequest("sunrise", args)
+    return req.get()
 
 @app.route("/sunset")
 def sunset():
-    return get_sun_transition_time("sunset")
+    args = parse_url_arguments(request.url)
+    req = SunriseSunsetRequest("sunset", args)
+    return req.get()
 
 @app.route("/lunar_phase")
 def lunar_phase():
