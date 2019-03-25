@@ -3,6 +3,7 @@ from utils import parse_url_arguments
 from sunrise_sunset import SunriseSunsetTimeRequest
 from lunar_phase import get_lunar_phase
 from event import get_events
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -20,7 +21,8 @@ def sunset():
 
 @app.route("/lunar_phase")
 def lunar_phase():
-    return get_lunar_phase()
+    args = parse_url_arguments(request.url)
+    return get_lunar_phase(args["date"])
 
 @app.route("/events")
 def events():

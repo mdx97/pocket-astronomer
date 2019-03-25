@@ -27,11 +27,7 @@ class SunriseSunsetTimeRequest:
     
     def _missing_arguments(self):
         req = ["lat", "lon", "date"]
-        res = []
-        for arg in req:
-            if not arg in self.arguments:
-                res.append(arg)
-        return res
+        return list(filter(lambda x: x in self.arguments, req))
     
     def _build_url(self):
         missing = self._missing_arguments()
