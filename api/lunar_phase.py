@@ -17,7 +17,6 @@ def get_lunar_phase(date_string):
     cursor = db.cursor()
     cursor.execute(query, [date_string])
     result = cursor.fetchone()
-    print(result)
     if not result:
         return "Error: no results found!"
     cursor.close()
