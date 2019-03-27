@@ -12,3 +12,6 @@ def parse_date(date_string):
 
 def date_to_string(date):
     return date.strftime("%Y-%m-%d")
+
+def datetime_to_string(dt):
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
