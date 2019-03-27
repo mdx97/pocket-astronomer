@@ -1,6 +1,6 @@
 import json
 from database import db
-import re
+from utils import parse_date, date_to_string
 
 STAGES = [
     "New Moon",
@@ -13,14 +13,22 @@ STAGES = [
     "Waning Crescent"
 ]
 
+class LunarPhase:
+    def __init__(self, date, stage):
+        self.date = date
+        self.stage = stage
+    
+    def serialize(self):
+        return {"date": date_to_string(self.date), "phase": STAGES[self.stage]}
+
 def get_lunar_phase(date_string):
-    if not re.match("[0-9]{4}-[0|1][1-9]-[0-3][1-9]", date_string):
-        return "Error: invalid date format."
+    date = parse_date(date_string)
     query = "SELECT * FROM lunar_phases WHERE date=%s"
     cursor = db.cursor()
     cursor.execute(query, [date_string])
     result = cursor.fetchone()
     if not result:
-        return "Error: no results found!"
+        raise Exception("Error: no results found!")
     cursor.close()
-    return json.dumps({"date": date_string, "phase": STAGES[result[1]]})
+    phase = LunarPhase(date, result[1])
+    return json.dumps(phase.serialize())

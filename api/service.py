@@ -19,10 +19,11 @@ def sunset():
 
 @app.route("/lunar_phase")
 def lunar_phase():
-    args = parse_url_arguments(request.url)
-    if "date" not in args:
-        return "Error: missing argument 'date'."
-    return get_lunar_phase(args["date"])
+    try:
+        args = parse_url_arguments(request.url)
+        return get_lunar_phase(args["date"])
+    except Exception as ex:
+        return (str(ex))
 
 @app.route("/events")
 def events():
