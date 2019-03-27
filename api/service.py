@@ -10,18 +10,18 @@ app = Flask(__name__)
 @app.route("/sunrise")
 def sunrise():
     args = parse_url_arguments(request.url)
-    req = SunriseSunsetTimeRequest("sunrise", args)
-    return req.get()
+    return SunriseSunsetTimeRequest("sunrise", args).get()
 
 @app.route("/sunset")
 def sunset():
     args = parse_url_arguments(request.url)
-    req = SunriseSunsetTimeRequest("sunset", args)
-    return req.get()
+    return SunriseSunsetTimeRequest("sunset", args).get()
 
 @app.route("/lunar_phase")
 def lunar_phase():
     args = parse_url_arguments(request.url)
+    if "date" not in args:
+        return "Error: missing argument 'date'."
     return get_lunar_phase(args["date"])
 
 @app.route("/events")
