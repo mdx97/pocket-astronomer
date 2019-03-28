@@ -7,10 +7,7 @@ def parse_url_arguments(url):
     if not parse_result.scheme:
         raise ValueError("Error: invalid URL.")
     d = dict(parse.parse_qsl(parse_result.query))
-    args = Args()
-    for key, val in d.items():
-        args[key] = val
-    return args
+    return Args(d)
     
 def parse_date(date_string):
     return datetime.strptime(date_string, "%Y-%m-%d")

@@ -1,6 +1,6 @@
 class Args:
-    def __init__(self):
-        self.dictionary = {}
+    def __init__(self, d={}):
+        self.dictionary = d
     
     def __getitem__(self, key):
         if key not in self.dictionary:
