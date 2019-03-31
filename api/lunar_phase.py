@@ -1,5 +1,6 @@
 import json
 from database import db
+from utils import date_to_string
 
 STAGES = [
     "New Moon",
@@ -12,12 +13,21 @@ STAGES = [
     "Waning Crescent"
 ]
 
-def get_lunar_phase(date_string):
+class LunarPhase:
+    def __init__(self, date, stage):
+        self.date = date
+        self.stage = stage
+    
+    def serialize(self):
+        return {"date": date_to_string(self.date), "phase": STAGES[self.stage]}
+
+def get_lunar_phase(date):
     query = "SELECT * FROM lunar_phases WHERE date=%s"
     cursor = db.cursor()
-    cursor.execute(query, [date_string])
+    cursor.execute(query, [date_to_string(date)])
     result = cursor.fetchone()
     if not result:
-        return "Error: no results found!"
+        raise Exception("Error: no result found!")
     cursor.close()
-    return json.dumps({"date": date_string, "phase": STAGES[result[1]]})
+    phase = LunarPhase(date, result[1])
+    return json.dumps(phase.serialize())

@@ -16,3 +16,5 @@ api/db/
 api/config.py
 api/notes.md
 .vscode/
+*.log
+api/config.py
