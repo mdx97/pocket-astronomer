@@ -11,3 +11,8 @@ Astronomer/.idea/assetWizardSettings.xml
 Astronomer/build
 Astronomer/captures
 .externalNativeBuild
+*__pycache__/
+api/db/
+api/config.py
+api/notes.md
+.vscode/
