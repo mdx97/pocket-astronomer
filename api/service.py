@@ -4,6 +4,7 @@ from sunrise_sunset import get_sun_transition_time
 from lunar_phase import get_lunar_phase
 from event import get_events
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
@@ -46,4 +47,5 @@ def events():
         return str(ex)
 
 if __name__ == "__main__":
-    app.run()
+    port = os.environ['PORT'] if 'PORT' in os.environ else 5000
+    app.run(port=port)
