@@ -3,12 +3,19 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import os
 import psycopg2
-from config import POSTGRES_CONN_STRING
+import sys
+from urllib.parse import urlparse
 
+if len(sys.argv) < 2:
+    print("Please enter a database connection string!")
+    exit(1)
+
+url = urlparse(sys.argv[1])
+dbname = url.path[1:]
 START_DATE = date.today()
 END_DATE = START_DATE + timedelta(days=30)
 browser = webdriver.Chrome('C:\\ChromeDriver\\chromedriver.exe')
-db = psycopg2.connect(POSTGRES_CONN_STRING)
+db = psycopg2.connect(dbname=dbname, user=url.username, password=url.password, host=url.hostname, port=url.port)
 
 def scrape_lunar_phase(date):
     url = "https://www.moongiant.com/phase/{}/{}/{}".format(date.month, date.day, date.year)

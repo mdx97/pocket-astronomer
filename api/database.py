@@ -1,4 +1,7 @@
 import psycopg2
-from config import POSTGRES_CONN_STRING
+import os
+from urllib.parse import urlparse
 
-db = psycopg2.connect(POSTGRES_CONN_STRING)
+url = urlparse(os.environ['DATABASE_URL'])
+dbname = url.path[1:]
+db = psycopg2.connect(dbname=dbname, user=url.username, password=url.password, host=url.hostname, port=url.port)
