@@ -15,7 +15,11 @@ stuff
 stuff
 
 ### Mathew Horner
-stuff
+Wrote the Python REST API we will be using to provide data to our Android application and set up cloud hosting for the service on Heroku.
+
+I created a script to scrape lunar phases from a website and write them to our Postgres DB.
+
+I've also written comprehensive documentation so that we can easily consume this API from our Android application.
 
 ### Randall Porter
 Code contributions: Set up project, activities, and navigation between activities. Added elements to most of the app screens. Added some functionality to some of the screen elements. 
