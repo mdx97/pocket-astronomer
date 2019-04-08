@@ -8,42 +8,36 @@
 
     <Button
         android:id="@+id/locationButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:onClick="swapToLocations"
         android:text="Configure Locations"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.654" />
+        app:layout_constraintBottom_toTopOf="@+id/eventButton"
+        app:layout_constraintEnd_toEndOf="@+id/upcommingButton"
+        app:layout_constraintStart_toStartOf="@+id/upcommingButton" />
 
     <Button
         android:id="@+id/eventButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:onClick="swapToEvents"
         android:text="Configure Events"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.756" />
+        app:layout_constraintBottom_toTopOf="@+id/upcommingButton"
+        app:layout_constraintEnd_toEndOf="@+id/upcommingButton"
+        app:layout_constraintStart_toStartOf="@+id/upcommingButton" />
 
     <Button
         android:id="@+id/upcommingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:onClick="swapToUpcoming"
         android:text="View Upcoming Events"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
