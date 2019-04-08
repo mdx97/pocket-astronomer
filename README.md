@@ -12,7 +12,10 @@
 stuff
 
 ### Alex Gittemeier
-stuff
+
+- [x] Added non-default app icon
+- [x] Spent time cleaning up UI of android app to make it look slicker
+- [ ] Incorporate Volley library into app to hit our Heroku instance
 
 ### Mathew Horner
 Wrote the Python REST API we will be using to provide data to our Android application and set up cloud hosting for the service on Heroku.
