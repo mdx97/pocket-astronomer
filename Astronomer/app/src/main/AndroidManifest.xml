@@ -22,8 +22,7 @@
         <activity android:name=".LocationsActivity"
             android:parentActivityName=".MainActivity"
             android:label="@string/label_locations"  />
-        <activity android:name=".MainActivity"
-            android:label="@string/label_main">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
