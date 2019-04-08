@@ -9,7 +9,7 @@
 ## Overall Contributions
 
 ### Connor Beshears
-stuff
+Started looking for additional resources to pull data from the web
 
 ### Alex Gittemeier
 stuff
