@@ -23,21 +23,13 @@ public class LocationsActivity extends AppCompatActivity implements LocationList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations);
-<<<<<<< Updated upstream
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        if (loc != null){
-            TextView latitudeET = findViewById(R.id.latitudeET);
-            TextView longitudeET = findViewById(R.id.longitudeET);
-            latitudeET.setText(""+(Math.round(1000.0 * loc.getLatitude())/1000.0));
-            longitudeET.setText(""+(Math.round(1000.0 * loc.getLongitude())/1000.0));
-        }
-=======
+
         Location loc = LocationTool.getLocation(this);
         TextView latitudeET = findViewById(R.id.latitudeET);
         TextView longitudeET = findViewById(R.id.longitudeET);
         latitudeET.setText(""+(Math.round(1000.0 * loc.getLatitude())/1000.0));
         longitudeET.setText(""+(Math.round(1000.0 * loc.getLongitude())/1000.0));
->>>>>>> Stashed changes
     }
 
 
