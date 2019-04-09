@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.location.Location;
 
-public class LocationTools {
+public class LocationTool {
 
     public Activity sender;
 
-    public LocationTools(Activity sender) {
+    public LocationTool(Activity sender) {
         this.sender = sender;
     }
 
