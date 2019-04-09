@@ -3,12 +3,13 @@ package com.example.astronomer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EventsActivity extends AppCompatActivity {
 
@@ -25,6 +26,8 @@ public class EventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         initModel();
 
         EventArrayAdapter<String> dayAdapter =
@@ -54,9 +57,16 @@ public class EventsActivity extends AppCompatActivity {
 
     }
 
-    public void returnAction(View v) {
-        Intent ini = getIntent();
-        setResult(0, ini);
-        finish();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            //Handling for back button inside ActionBar
+            Intent ini = getIntent();
+            setResult(0, ini);
+            finish();
+            return true;
+        }
+        else
+            return super.onOptionsItemSelected(item);
     }
 }
