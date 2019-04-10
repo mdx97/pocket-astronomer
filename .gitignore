@@ -19,3 +19,4 @@ api/notes.md
 *.log
 api/config.py
 env/
+Astronomer/.idea/vcs.xml

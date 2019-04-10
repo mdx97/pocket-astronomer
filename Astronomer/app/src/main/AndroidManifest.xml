@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.astronomer">
 
     <application
+        tools:ignore="GoogleAppIndexingWarning"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".UpcomingActivity"></activity>
-        <activity android:name=".EventsActivity"></activity>
-        <activity android:name=".LocationsActivity"></activity>
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".EventsActivity" />
+        <activity android:name=".UpcomingActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/label_upcoming"  />
+        <activity android:name=".EventsActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/label_events"  />
+        <activity android:name=".LocationsActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/label_locations"  />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,5 +30,9 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
