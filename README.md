@@ -9,7 +9,7 @@
 ## Overall Contributions
 
 ### Connor Beshears
-Started looking for additional resources to pull data from the web
+Added persistance for the options
 
 ### Alex Gittemeier
 
