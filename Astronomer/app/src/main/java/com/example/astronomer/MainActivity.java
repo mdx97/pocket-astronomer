@@ -27,14 +27,19 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.label_main);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        SimpleDateFormat
         viewModel.observeSunrise(this, sunrise -> {
-            Log.i("MainActivity", "Observed change in sunrise")
+            Log.i("MainActivity", "Observed change in sunrise");
+            //This is where the sunrise widget gets updated in response to network response
         });
 
         viewModel.observeSunset(this, sunset -> {
-
+            Log.i("MainActivity", "Observed change in sunset");
+            //This is where the sunset widget gets updated in response to network response
         });
+
+        if (viewModel.isDataStale()) {
+            fetchSunriseSunset(new Date(/* now */), 40.3589785F, -94.883186F);
+        }
     }
 
     public void swapToUpcoming(View v){
@@ -52,16 +57,15 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(swap,1 );
     }
 
-    public void onActivityResult(int resultcode, int errorcode, Intent ini){
+    public void onActivityResult(int resultcode, int errorcode, Intent ini) {
 
     }
 
     private void fetchSunriseSunset(Date date, float lat, float lon) {
         AstronomerApp app = (AstronomerApp) getApplication();
         TimeZone utc = TimeZone.getTimeZone("UTC");
-        SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-DD", Locale.US);
+        SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-DD", Locale.US); //Timezone is local!
         SimpleDateFormat apiTimeFormat = new SimpleDateFormat("hh:mm:ss a", Locale.US);
-        ymdFormat.setTimeZone(utc);
         apiTimeFormat.setTimeZone(utc);
 
         String dateStr = ymdFormat.format(date);
