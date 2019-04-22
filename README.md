@@ -1,5 +1,16 @@
 # Pocket Astronomer
 
+Pocket Astronomer is an Android app that allows users to track astronomical events and get notifications when events they are interested in are about to happen. It makes use of the user's location to determine which events should be visible from the user's point of view at any given time. Users can configure a list of different events (such as solar and lunar eclipses) to tell the app which ones they are interested in.
+
+## Installation
+- ?
+
+## Requirements
+This app is targeted at Android 9.0 (Pie), API level 28. The minimum supported version is Android 5.1 (Lollipop), API level 21. To use the app's location detection feature, the device must have GPS or cellular access. To pull data about astronomical events, a cellular or wifi connection is required.
+
+## Sources
+- developer.android.com
+
 ## Team
 - Connor Beshears
 - Alex Gittemeier
@@ -9,7 +20,7 @@
 ## Overall Contributions
 
 ### Connor Beshears
-Started looking for additional resources to pull data from the web
+Added persistance for the options
 
 ### Alex Gittemeier
 
