@@ -19,16 +19,15 @@ class Event:
         }
 
 def get_events(start_date, end_date, classification):
-    query = "SELECT * FROM events WHERE date >= %s AND date <= %s AND classification=%s"
+    query = "SELECT id, name, date, classification FROM events WHERE date >= %s AND date <= %s AND classification=%s"
     cursor = db.cursor()
     cursor.execute(query, (date_to_string(start_date), date_to_string(end_date), classification))
     results = cursor.fetchall()
     data = []
 
     for result in results:
-        time = result[3]
-        dt = result[2] + timedelta(hours=time.hour, minutes=time.minute, seconds=time.second)
-        event = Event(result[0], result[1], dt, result[4])
+        dt = result[2]
+        event = Event(result[0], result[1], dt, result[3])
         data.append(event.serialize())
     
     return json.dumps(data)
