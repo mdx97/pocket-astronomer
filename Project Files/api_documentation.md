@@ -116,8 +116,5 @@ Possible values for `classification` are:
 
 * Lunar Eclipse
 * Solar Eclipse
-* Lunar Transit
-* Solar Transit
-* Satellites
+* Transit
 * Comets
-* Meteor Showers
