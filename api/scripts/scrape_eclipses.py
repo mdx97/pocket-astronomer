@@ -30,11 +30,12 @@ for el in elements:
     
     # Determine if this element represents a solar eclipse, lunar eclipse, and transits.
     type_el = el.find("span", { "class": "ec-type" })
-    t = type_el.text
+    name = type_el.text
+    t = name.split('(')[0][:-1]
 
     # Write to db.
-    command = "INSERT INTO events (date, classification) VALUES (%s, %s)"
-    cursor.execute(command, (date, t))
+    command = "INSERT INTO events (date, classification, name) VALUES (%s, %s, %s)"
+    cursor.execute(command, (date, t, name))
 
 db.commit()
 cursor.close()
