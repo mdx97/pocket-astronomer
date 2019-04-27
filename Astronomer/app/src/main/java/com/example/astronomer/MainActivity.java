@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
         String dateStr = ymdFormat.format(date);
         String utcDateStr = ymdUTCFormat.format(date);
-        String sunriseUrl = String.format("https://pocket-astronomer-api.herokuapp.com/sunrise?date=%s&lat=%s&lon=%s", dateStr, lat, lon);
-        String sunsetUrl = String.format("https://pocket-astronomer-api.herokuapp.com/sunset?date=%s&lat=%s&lon=%s", dateStr, lat, lon);
+        String sunriseUrl = AstronomerApp.buildUrl("https://pocket-astronomer-api.herokuapp.com/sunrise?date=%s&lat=%s&lon=%s", dateStr, lat, lon);
+        String sunsetUrl = AstronomerApp.buildUrl("https://pocket-astronomer-api.herokuapp.com/sunset?date=%s&lat=%s&lon=%s", dateStr, lat, lon);
 
         app.getRequestQueue().add(new StringRequest(sunriseUrl,
             response -> {
