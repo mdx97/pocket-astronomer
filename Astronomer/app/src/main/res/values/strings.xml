@@ -5,4 +5,10 @@
     <string name="label_events">Events</string>
     <string name="label_locations">Locations</string>
     <string name="label_main">Pocket Astronomer</string>
+
+    <string name="sunrise_in">Sunrise:\n%s (%s)</string>
+    <string name="sunset_in">Sunset:\n%s (%s)</string>
+    <string name="from_now">from now</string>
+    <string name="ago">ago</string>
+    <string name="interval_format">%dhr %02dmin %s</string>
 </resources>

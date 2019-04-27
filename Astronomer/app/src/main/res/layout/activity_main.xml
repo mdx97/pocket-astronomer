@@ -64,10 +64,9 @@
         app:layout_constraintVertical_bias="0.199" />
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="173dp"
-        android:layout_height="20dp"
-        android:text="Sunrise In: 02:40:13"
+        android:id="@+id/nextEventTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.857"

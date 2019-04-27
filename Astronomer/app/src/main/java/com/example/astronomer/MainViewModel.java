@@ -13,8 +13,7 @@ import java.util.Date;
 public class MainViewModel extends AndroidViewModel {
     private static final long STALE_TIME = 15*60*1000;//ms == 15 minutes
 
-    private final MutableLiveData<Date> sunrise = new MutableLiveData<>();
-    private final MutableLiveData<Date> sunset = new MutableLiveData<>();
+    private final MutableLiveData<SunEventTimes> sunEvents = new MutableLiveData<>();
     private long lastUpdate = Long.MIN_VALUE;
 
     public MainViewModel(@NonNull Application application) {
@@ -22,24 +21,32 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void setSunrise(Date sunrise) {
-        this.sunrise.setValue(sunrise);
+        SunEventTimes events = sunEvents.getValue();
+        if (events == null)
+            events = new SunEventTimes();
+        events.sunrise = sunrise;
+        sunEvents.setValue(events);
         lastUpdate = System.currentTimeMillis();
     }
 
     public void setSunset(Date sunset) {
-        this.sunset.setValue(sunset);
+        SunEventTimes events = sunEvents.getValue();
+        if (events == null)
+            events = new SunEventTimes();
+        events.sunset = sunset;
+        sunEvents.setValue(events);
         lastUpdate = System.currentTimeMillis();
     }
 
-    public void observeSunrise(LifecycleOwner owner, Observer<Date> observer) {
-        sunrise.observe(owner, observer);
-    }
-
-    public void observeSunset(LifecycleOwner owner, Observer<Date> observer) {
-        sunset.observe(owner, observer);
+    public void observeSunEvents(LifecycleOwner owner, Observer<SunEventTimes> observer) {
+        sunEvents.observe(owner, observer);
     }
 
     public boolean isDataStale() {
         return System.currentTimeMillis() > lastUpdate + STALE_TIME;
+    }
+
+    public static class SunEventTimes {
+        Date sunrise, sunset;
     }
 }

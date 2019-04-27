@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.toolbox.StringRequest;
 
@@ -18,7 +19,9 @@ import java.util.Objects;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
-    MainViewModel viewModel;
+    private static final String TAG = "MainActivity";
+
+    private MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,19 +29,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.label_main);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        long now = System.currentTimeMillis();
+        TextView nextEventTV = findViewById(R.id.nextEventTV);
 
-        viewModel.observeSunrise(this, sunrise -> {
-            Log.i("MainActivity", "Observed change in sunrise");
-            //This is where the sunrise widget gets updated in response to network response
-        });
+        viewModel.observeSunEvents(this, sunEvents -> {
+            SimpleDateFormat smallTime = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
-        viewModel.observeSunset(this, sunset -> {
-            Log.i("MainActivity", "Observed change in sunset");
-            //This is where the sunset widget gets updated in response to network response
+            if (sunEvents == null) {
+                nextEventTV.setText(null);
+                return;
+            }
+            boolean sunsetIsNext;
+
+            if (sunEvents.sunrise != null && sunEvents.sunrise.getTime() > now) {
+                sunsetIsNext = sunEvents.sunset != null && sunEvents.sunrise.getTime() > sunEvents.sunset.getTime() && sunEvents.sunset.getTime() > now;
+            }
+            else if (sunEvents.sunset != null && sunEvents.sunset.getTime() > now) {
+                //sunset is in the future
+                sunsetIsNext = true;
+            }
+            else {
+                Log.e(TAG, "Both events returned are in the past!");
+                return;
+            }
+
+            if (sunsetIsNext)
+                nextEventTV.setText(getString(R.string.sunset_in, formatTimeInterval(now, sunEvents.sunset.getTime()), smallTime.format(sunEvents.sunset)));
+            else
+                nextEventTV.setText(getString(R.string.sunrise_in, formatTimeInterval(now, sunEvents.sunrise.getTime()), smallTime.format(sunEvents.sunrise)));
         });
 
         if (viewModel.isDataStale()) {
-            fetchSunriseSunset(new Date(/* now */), 40.3589785F, -94.883186F);
+            fetchSunriseSunset(new Date(now), 40.3589785F, -94.883186F);
         }
     }
 
@@ -64,35 +86,55 @@ public class MainActivity extends AppCompatActivity {
     private void fetchSunriseSunset(Date date, float lat, float lon) {
         AstronomerApp app = (AstronomerApp) getApplication();
         TimeZone utc = TimeZone.getTimeZone("UTC");
-        SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-DD", Locale.US); //Timezone is local!
-        SimpleDateFormat apiTimeFormat = new SimpleDateFormat("hh:mm:ss a", Locale.US);
+        SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US); //Timezone is local!
+        SimpleDateFormat ymdUTCFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat apiTimeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.US);
         apiTimeFormat.setTimeZone(utc);
+        ymdUTCFormat.setTimeZone(utc);
 
         String dateStr = ymdFormat.format(date);
+        String utcDateStr = ymdUTCFormat.format(date);
         String sunriseUrl = String.format("https://pocket-astronomer-api.herokuapp.com/sunrise?date=%s&lat=%s&lon=%s", dateStr, lat, lon);
         String sunsetUrl = String.format("https://pocket-astronomer-api.herokuapp.com/sunset?date=%s&lat=%s&lon=%s", dateStr, lat, lon);
 
         app.getRequestQueue().add(new StringRequest(sunriseUrl,
             response -> {
                 try {
-                    viewModel.setSunrise(apiTimeFormat.parse(response));
+                    viewModel.setSunrise(apiTimeFormat.parse(utcDateStr + " " + response));
                 } catch (ParseException e) {
-                    Toast.makeText(this, "Error parsing sunrise: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Error parsing sunrise: " + e, Toast.LENGTH_LONG).show();
                 }
             },
             e -> {
-                Toast.makeText(this, "Error fetching sunrise: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error fetching sunrise: " + e, Toast.LENGTH_LONG).show();
             }));
         app.getRequestQueue().add(new StringRequest(sunsetUrl,
             response -> {
                 try {
-                    viewModel.setSunset(apiTimeFormat.parse(response));
+                    viewModel.setSunset(apiTimeFormat.parse(utcDateStr + " " + response));
                 } catch (ParseException e) {
-                    Toast.makeText(this, "Error parsing sunset: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Error parsing sunset: " + e, Toast.LENGTH_LONG).show();
                 }
             },
             e -> {
                 Toast.makeText(this, "Error fetching sunset: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }));
+    }
+    
+    private String formatTimeInterval(long initialTime, long finalTime) {
+        long deltaTime = finalTime - initialTime;
+        String directionalityFlag = getString(R.string.from_now);
+        if (deltaTime < 0) {
+            directionalityFlag = getString(R.string.ago);
+            deltaTime = -deltaTime;
+        }
+        deltaTime /= 1000; //truncate to seconds
+        int ss = (int) (deltaTime % 60);
+        deltaTime /= 60; //truncate to minutes
+        int mm = (int) (deltaTime % 60);
+        deltaTime /= 60; //trucate to hours
+        int hh = (int) deltaTime;
+
+        return getString(R.string.interval_format, hh, mm, directionalityFlag);
     }
 }
