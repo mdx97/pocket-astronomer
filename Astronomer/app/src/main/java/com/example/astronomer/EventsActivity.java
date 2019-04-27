@@ -15,6 +15,7 @@ public class EventsActivity extends AppCompatActivity {
 
     protected static ArrayList<String> events = new ArrayList<String>();
     private void initModel(){
+        events.clear();
         events.add("Lunar Eclipses");
         events.add("Solar Eclipses");
         events.add("Solar Transits");
