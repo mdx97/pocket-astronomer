@@ -1,16 +1,23 @@
 package com.example.astronomer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -27,7 +34,7 @@ public class UpcomingActivity extends AppCompatActivity {
 
         ListView upcomingLV = findViewById(R.id.upcomingLV);
         List<AstroEvent> events = new ArrayList<>();
-        ArrayAdapter<AstroEvent> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, events);
+        ArrayAdapter<AstroEvent> adapter = new AstroAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1, events);
         upcomingLV.setAdapter(adapter);
 
         fetchUpcomingEvents(adapter, events);
@@ -95,6 +102,25 @@ public class UpcomingActivity extends AppCompatActivity {
         @Override
         public String toString() {
             return name;
+        }
+    }
+
+    private static class AstroAdapter extends ArrayAdapter<AstroEvent> {
+        private final DateFormat dateFormat = DateFormat.getDateInstance(); //NOTE; local timezone
+        public AstroAdapter(Context context, int resource, int textViewResourceId, List<AstroEvent> objects) {
+            super(context, resource, textViewResourceId, objects);
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            AstroEvent event = getItem(position);
+            View root = super.getView(position, convertView, parent);
+
+            if (event != null) {
+                TextView text2 = root.findViewById(android.R.id.text2);
+                text2.setText(dateFormat.format(event.datetime));
+            }
+
+            return root;
         }
     }
 }
